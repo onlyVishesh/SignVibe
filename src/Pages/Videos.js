@@ -54,7 +54,7 @@ function Videos() {
         <div className="container my-5">
           <div className="display-5 px-2 text-center">Explore ISL Videos!</div>
           <div className="lead text-center">
-            Welcome to the ISL video section of Sign Kit. Create your own public
+            Welcome to the ISL video section of SignVibe. Create your own public
             or private videos, share with your friends and colleagues or browse
             through the videos created by others and shared with the entire
             community!

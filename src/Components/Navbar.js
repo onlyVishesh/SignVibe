@@ -13,10 +13,7 @@ function Navbar() {
     <nav className="navbar navbar-dark bg-dark fixed-top ">
       <div className="container flex flex-wrap items-center justify-between w-full py-3 md:py-0 px-2 text-lg text-gray-700">
         <div>
-          <Link
-            to="/home"
-            className={`navbar-brand h1`}
-          >
+          <Link to="/home" className={`navbar-brand h1`}>
             <img
               src={logo}
               width="30"
@@ -24,7 +21,7 @@ function Navbar() {
               className="d-inline-block align-top me-3"
               alt="Logo"
             />
-            Sign Kit
+            SignVibe
           </Link>
         </div>
         <a href="#" onClick={toggleMenu}>

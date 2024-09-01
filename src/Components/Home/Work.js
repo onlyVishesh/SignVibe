@@ -32,7 +32,7 @@ const Work = () => {
               </div>
 
               <div className="text-center divide-y-2 space-y-2 divide-orange-600">
-                <h4 className="text-xl md:text-2xl font-semibold">HandVanni</h4>
+                <h4 className="text-xl md:text-2xl font-semibold">SignVibe</h4>
                 <p className="text-md md:text-lg pt-2">
                   Transcribes speech to text <br />
                   and ISL to text in real-time.

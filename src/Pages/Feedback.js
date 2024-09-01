@@ -22,7 +22,7 @@ function Feedback() {
       <div className="container row d-flex justify-content-between">
         <div className="card card mb-3 col-md-5 p-0 border border-primary">
           <div className="card-header text-center bg-primary text-white">
-            Sign Kit: Feedback Form 1
+            SignVibe: Feedback Form 1
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
             <div>
@@ -33,7 +33,7 @@ function Feedback() {
                 usability etc.
               </p>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -48,7 +48,7 @@ function Feedback() {
 
         <div className="card card mb-3 col-md-5 p-0 border border-primary">
           <div className="card-header text-center bg-primary text-white">
-            Sign Kit: Feedback Form 2
+            SignVibe: Feedback Form 2
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
             <div>
@@ -59,7 +59,7 @@ function Feedback() {
                 sign is displayed everytime.
               </p>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -76,7 +76,7 @@ function Feedback() {
       <div className="container row d-flex justify-content-between">
         <div className="card card mb-3 col-md-5 p-0 border border-primary">
           <div className="card-header text-center bg-primary text-white">
-            Sign Kit: Feedback Form 3
+            SignVibe: Feedback Form 3
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
             <div>
@@ -89,7 +89,7 @@ function Feedback() {
                 webapp are correct or not.
               </p>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -104,7 +104,7 @@ function Feedback() {
 
         <div className="card card mb-3 col-md-5 p-0 border border-primary">
           <div className="card-header text-center bg-primary text-white">
-            Sign Kit: Feedback Form 4
+            SignVibe: Feedback Form 4
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
             <div>
@@ -117,7 +117,7 @@ function Feedback() {
                 recorded signs.
               </p>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <a
                 target="_blank"
                 rel="noreferrer"
@@ -134,18 +134,18 @@ function Feedback() {
       <div className="container row d-flex justify-content-between">
         <div className="card card col-md-5 p-0 border border-primary">
           <div className="card-header text-center bg-primary text-white">
-            Sign Kit: Feedback Form 5
+            SignVibe: Feedback Form 5
           </div>
           <div className="card-body d-flex flex-column justify-content-between">
             <div>
-              <h5 className="card-title">
-                Feedback on 'Create Video' module
-              </h5>
+              <h5 className="card-title">Feedback on 'Create Video' module</h5>
               <p className="card-text">
-                Help us know if our ISL Video creation module is simple and easy enough to use. Let us know if you want any more features to be added in this module.
+                Help us know if our ISL Video creation module is simple and easy
+                enough to use. Let us know if you want any more features to be
+                added in this module.
               </p>
             </div>
-            <div className='mt-3'>
+            <div className="mt-3">
               <a
                 target="_blank"
                 rel="noreferrer"

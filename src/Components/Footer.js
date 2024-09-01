@@ -11,7 +11,7 @@ function Footer() {
         <div className="container text-md-left mt-5">
           <div className="row mt-3">
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-              <h6 className="text-uppercase font-weight-bold">SIGN KIT</h6>
+              <h6 className="text-uppercase font-weight-bold">SignVibe</h6>
               <hr
                 className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto"
                 style={{ width: "60px" }}
@@ -72,7 +72,6 @@ function Footer() {
                 <p>
                   <i className="fa fa-lg fa-home me-3 ms-0"></i>
                   <span className="footer-text">
-                    {" "}
                     KIET Group Of Institutions
                   </span>
                 </p>

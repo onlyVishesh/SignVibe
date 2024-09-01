@@ -1,18 +1,18 @@
-import '../App.css'
-import React, { useState, useEffect, useRef } from "react";
-import Slider from 'react-input-slider';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "font-awesome/css/font-awesome.min.css";
+import React, { useEffect, useRef, useState } from "react";
+import Slider from "react-input-slider";
+import "../App.css";
 
-import xbot from '../Models/xbot/xbot.glb';
-import ybot from '../Models/ybot/ybot.glb';
-import xbotPic from '../Models/xbot/xbot.png';
-import ybotPic from '../Models/ybot/ybot.png';
+import xbot from "../Models/xbot/xbot.glb";
+import xbotPic from "../Models/xbot/xbot.png";
+import ybot from "../Models/ybot/ybot.glb";
+import ybotPic from "../Models/ybot/ybot.png";
 
-import * as words from '../Animations/words';
-import * as alphabets from '../Animations/alphabets';
-import * as numbers from '../Animations/numbers';
-import { defaultPose } from '../Animations/defaultPose';
+import * as alphabets from "../Animations/alphabets";
+import { defaultPose } from "../Animations/defaultPose";
+import * as numbers from "../Animations/numbers";
+import * as words from "../Animations/words";
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -25,22 +25,21 @@ function LearnSign() {
   const componentRef = useRef({});
   const { current: ref } = componentRef;
 
- const numToWord = {
-   0: "Zero",
-   1: "One",
-   2: "Two",
-   3: "Three",
-   4: "Four",
-   5: "Five",
-   6: "Six",
-   7: "Seven",
-   8: "Eight",
-   9: "Nine",
-   10: "Ten",
- };
+  const numToWord = {
+    0: "Zero",
+    1: "One",
+    2: "Two",
+    3: "Three",
+    4: "Four",
+    5: "Five",
+    6: "Six",
+    7: "Seven",
+    8: "Eight",
+    9: "Nine",
+    10: "Ten",
+  };
 
   useEffect(() => {
-
     ref.flag = false;
     ref.pending = false;
 
@@ -55,29 +54,48 @@ function LearnSign() {
     ref.scene.add(spotLight);
 
     ref.camera = new THREE.PerspectiveCamera(
-        30,
-        window.innerWidth*0.57 / (window.innerHeight - 70),
-        0.1,
-        1000
-    )
-
+      30,
+      (window.innerWidth * 0.57) / (window.innerHeight - 70),
+      0.1,
+      1000
+    );
     ref.renderer = new THREE.WebGLRenderer({ antialias: true });
-    ref.renderer.setSize(window.innerWidth * 0.57, (window.innerHeight - 70));
+
+    const resizeRenderer = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight - 70;
+
+      if (width < 767) {
+        ref.camera.aspect = width / height;
+        ref.camera.position.z = 3;
+      } else {
+        ref.camera.aspect = (width * 0.57) / height;
+        ref.camera.position.z = 1.6;
+      }
+
+      ref.camera.updateProjectionMatrix();
+      ref.renderer?.setSize(width < 767 ? width : width * 0.57, height);
+    };
+
+    resizeRenderer();
+
+    window.addEventListener("resize", resizeRenderer);
     document.getElementById("canvas").innerHTML = "";
     document.getElementById("canvas").appendChild(ref.renderer.domElement);
 
     ref.camera.position.z = 1.6;
     ref.camera.position.y = 1.4;
 
+
     let loader = new GLTFLoader();
     loader.load(
       bot,
       (gltf) => {
         gltf.scene.traverse((child) => {
-          if ( child.type === 'SkinnedMesh' ) {
+          if (child.type === "SkinnedMesh") {
             child.frustumCulled = false;
           }
-    });
+        });
         ref.avatar = gltf.scene;
         ref.scene.add(ref.avatar);
         defaultPose(ref);
@@ -86,65 +104,79 @@ function LearnSign() {
         console.log(xhr);
       }
     );
-
+    return () => {
+      window.removeEventListener("resize", resizeRenderer);
+    };
   }, [ref, bot]);
 
   ref.animate = () => {
-    if(ref.animations.length === 0){
-        ref.pending = false;
-      return ;
+    if (ref.animations.length === 0) {
+      ref.pending = false;
+      return;
     }
     requestAnimationFrame(ref.animate);
-    if(ref.animations[0].length){
-        if(!ref.flag) {
-          for(let i=0;i<ref.animations[0].length;){
-            let [boneName, action, axis, limit, sign] = ref.animations[0][i]
-            if(sign === "+" && ref.avatar.getObjectByName(boneName)[action][axis] < limit){
-                ref.avatar.getObjectByName(boneName)[action][axis] += speed;
-                ref.avatar.getObjectByName(boneName)[action][axis] = Math.min(ref.avatar.getObjectByName(boneName)[action][axis], limit);
-                i++;
-            }
-            else if(sign === "-" && ref.avatar.getObjectByName(boneName)[action][axis] > limit){
-                ref.avatar.getObjectByName(boneName)[action][axis] -= speed;
-                ref.avatar.getObjectByName(boneName)[action][axis] = Math.max(ref.avatar.getObjectByName(boneName)[action][axis], limit);
-                i++;
-            }
-            else{
-                ref.animations[0].splice(i, 1);
-            }
+    if (ref.animations[0].length) {
+      if (!ref.flag) {
+        for (let i = 0; i < ref.animations[0].length; ) {
+          let [boneName, action, axis, limit, sign] = ref.animations[0][i];
+          if (
+            sign === "+" &&
+            ref.avatar.getObjectByName(boneName)[action][axis] < limit
+          ) {
+            ref.avatar.getObjectByName(boneName)[action][axis] += speed;
+            ref.avatar.getObjectByName(boneName)[action][axis] = Math.min(
+              ref.avatar.getObjectByName(boneName)[action][axis],
+              limit
+            );
+            i++;
+          } else if (
+            sign === "-" &&
+            ref.avatar.getObjectByName(boneName)[action][axis] > limit
+          ) {
+            ref.avatar.getObjectByName(boneName)[action][axis] -= speed;
+            ref.avatar.getObjectByName(boneName)[action][axis] = Math.max(
+              ref.avatar.getObjectByName(boneName)[action][axis],
+              limit
+            );
+            i++;
+          } else {
+            ref.animations[0].splice(i, 1);
           }
         }
-    }
-    else {
+      }
+    } else {
       ref.flag = true;
       setTimeout(() => {
-        ref.flag = false
+        ref.flag = false;
       }, pause);
       ref.animations.shift();
     }
     ref.renderer.render(ref.scene, ref.camera);
-  }
+  };
 
   let alphaButtons = [];
   for (let i = 0; i < 26; i++) {
     alphaButtons.push(
-        <div className='col-md-3'>
-            <button className='signs w-100' onClick={()=>{
-              if(ref.animations.length === 0){
-                alphabets[String.fromCharCode(i + 65)](ref);
-              }
-            }}>
-                {String.fromCharCode(i + 65)}
-            </button>
-        </div>
+      <div className="">
+        <button
+          className="signs w-fit px-4 py-2 flex justify-center items-center"
+          onClick={() => {
+            if (ref.animations.length === 0) {
+              alphabets[String.fromCharCode(i + 65)](ref);
+            }
+          }}
+        >
+          {String.fromCharCode(i + 65)}
+        </button>
+      </div>
     );
   }
-    let numButtons = [];
+  let numButtons = [];
   for (let i = 0; i < 10; i++) {
     numButtons.push(
-      <div className="col-md-3">
+      <div className="">
         <button
-          className="signs w-100"
+          className="signs w-fit px-4 py-2 flex justify-center items-center"
           onClick={() => {
             if (ref.animations.length === 0) {
               numbers[numToWord[[String.fromCharCode(i + 48)]]](ref);
@@ -160,15 +192,18 @@ function LearnSign() {
   let wordButtons = [];
   for (let i = 0; i < words.wordList.length; i++) {
     wordButtons.push(
-        <div className='col-md-4'>
-            <button className='signs w-100' onClick={()=>{
-              if(ref.animations.length === 0){
-                words[words.wordList[i]](ref);
-              }
-            }}>
-                {words.wordList[i]}
-            </button>
-        </div>
+      <div className="">
+        <button
+          className="signs w-fit px-2 py-1 flex justify-center items-center"
+          onClick={() => {
+            if (ref.animations.length === 0) {
+              words[words.wordList[i]](ref);
+            }
+          }}
+        >
+          {words.wordList[i]}
+        </button>
+      </div>
     );
   }
 
@@ -177,11 +212,11 @@ function LearnSign() {
       <div className="row">
         <div className="col-md-3">
           <h1 className="heading">Alphabets</h1>
-          <div className="row">{alphaButtons}</div>
+          <div className="flex gap-2 flex-wrap">{alphaButtons}</div>
           <h1 className="heading">Numbers</h1>
-          <div className="row">{numButtons}</div>
+          <div className="flex gap-2 flex-wrap">{numButtons}</div>
           <h1 className="heading">Words</h1>
-          <div className="row">{wordButtons}</div>
+          <div className="flex gap-2 flex-wrap">{wordButtons}</div>
         </div>
         <div className="col-md-7">
           <div id="canvas" />
