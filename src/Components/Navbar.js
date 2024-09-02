@@ -11,7 +11,7 @@ function Navbar() {
 
   return (
     <nav className="navbar navbar-dark bg-dark fixed-top ">
-      <div className="container flex flex-wrap items-center justify-between w-full py-3 md:py-0 px-2 text-lg text-gray-700">
+      <div className="container flex flex-wrap items-center justify-between w-full py-0 px-2 text-lg text-gray-700">
         <div>
           <Link to="/home" className={`navbar-brand h1`}>
             <img
@@ -43,9 +43,9 @@ function Navbar() {
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } w-full md:flex md:items-center md:w-auto bg-dark`}
+          } w-full md:flex justify-start md:justify-center items-center md:w-auto`}
         >
-          <ul className="text-base text-gray-700 pt-4 md:flex md:justify-between md:pt-0">
+          <ul className="text-gray-700 md:flex md:justify-between md:pt-0 items-center text-center">
             <li className="nav-item">
               <Link to="/home" className="nav-link active text-white">
                 Home

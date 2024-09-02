@@ -19,7 +19,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 function LearnSign() {
   const [bot, setBot] = useState(ybot);
-  const [speed, setSpeed] = useState(0.1);
+  const [speed, setSpeed] = useState(0.2);
   const [pause, setPause] = useState(800);
 
   const componentRef = useRef({});

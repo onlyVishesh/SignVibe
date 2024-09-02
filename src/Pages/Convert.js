@@ -10,6 +10,7 @@ import ybot from "../Models/ybot/ybot.glb";
 import ybotPic from "../Models/ybot/ybot.png";
 
 import * as alphabets from "../Animations/alphabets";
+import * as numbers from "../Animations/numbers";
 import { defaultPose } from "../Animations/defaultPose";
 import * as words from "../Animations/words";
 
@@ -23,7 +24,7 @@ import SpeechRecognition, {
 function Convert() {
   const [text, setText] = useState("");
   const [bot, setBot] = useState(ybot);
-  const [speed, setSpeed] = useState(0.1);
+  const [speed, setSpeed] = useState(0.2);
   const [pause, setPause] = useState(800);
 
   const componentRef = useRef({});
@@ -31,6 +32,21 @@ function Convert() {
 
   let textFromAudio = React.createRef();
   let textFromInput = React.createRef();
+
+  const numToWord = {
+    0: "Zero",
+    1: "One",
+    2: "Two",
+    3: "Three",
+    4: "Four",
+    5: "Five",
+    6: "Six",
+    7: "Seven",
+    8: "Eight",
+    9: "Nine",
+    10: "Ten",
+  };
+
 
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
 
@@ -159,7 +175,6 @@ function Convert() {
   };
 
   const sign = (inputRef) => {
-
     stopAllAnimations();
     var str = inputRef.current.value.toUpperCase();
     var strWords = str.split(" ");
@@ -171,16 +186,23 @@ function Convert() {
         words[word](ref);
       } else {
         for (const [index, ch] of word.split("").entries()) {
+          let animationKey = ch;
+          console.log(ch)
+
           if (index === word.length - 1)
             ref.animations.push(["add-text", ch + " "]);
           else ref.animations.push(["add-text", ch]);
-          alphabets[ch](ref);
+
+          if (numbers[numToWord[animationKey]]) {
+            numbers[numToWord[animationKey]](ref);
+          } else if (alphabets[ch]) {
+            alphabets[ch](ref);
+          }
         }
       }
     }
     ref.animate();
   };
-
   const startListening = () => {
     SpeechRecognition.startListening({ continuous: true });
   };

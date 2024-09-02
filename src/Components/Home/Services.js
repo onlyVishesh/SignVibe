@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import imgApp from "../../Assets/App.png";
 import imgConvert from "../../Assets/convert.png";
 import imgLearnSign from "../../Assets/learn-sign.jpg";
-import imgVideos from "../../Assets/videos.png";
 
 function Services() {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/SignVibe.apk";
+    link.download = "SignVibe.apk";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <section id="services" className="bg-gray-100 py-2">
       <div className="container ">
@@ -33,11 +41,40 @@ function Services() {
               <div className="card col-lg-12 h-100 d-flex flex-column justify-content-between card-background">
                 <img
                   className="card-img-top"
+                  src={imgApp}
+                  alt="Videos Clipart"
+                />
+                <div className="card-body">
+                  <h5 className="card-title text-center">Download Our App</h5>
+                  <p className="card-text">
+                    Get the full experience of Indian Sign Language right on
+                    your Android device! Download our app now and start
+                    exploring features like video creation, sign language
+                    learning, and much more. Your journey to mastering ISL
+                    starts here!
+                  </p>
+                </div>
+                <div className="card-footer p-0 m-0" style={{ border: "none" }}>
+                  <button
+                    to="/all-videos"
+                    className="btn btn-info w-100 p-3"
+                    style={{ fontSize: "large" }}
+                    onClick={handleDownload}
+                  >
+                    DOWNLOAD NOW!
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4 mt-5">
+              <div className="card col-lg-12 h-100 d-flex flex-column justify-content-between card-background">
+                <img
+                  className="card-img-top "
                   src={imgConvert}
                   alt="Convert Clipart"
                 />
                 <div className="card-body">
-                  <h5 className="card-title">Convert</h5>
+                  <h5 className="card-title text-center">Convert To ISL</h5>
                   <p className="card-text">
                     Want to convert audio or text into Indian Sign Language?
                     Then, you are in the right place! Provide your audio by
@@ -66,7 +103,7 @@ function Services() {
                 />
                 <hr className="m-0"></hr>
                 <div className="card-body">
-                  <h5 className="card-title">Learn Sign</h5>
+                  <h5 className="card-title text-center">Learn ISL</h5>
                   <p className="card-text">
                     Curious about Indian Sign Language? Then, learn ISL from us!
                     Select a sign from the list, watch it as many times as you
@@ -77,34 +114,6 @@ function Services() {
                 <div className="card-footer p-0 m-0" style={{ border: "none" }}>
                   <Link
                     to="/learn-sign"
-                    className="btn btn-info w-100 p-3"
-                    style={{ fontSize: "large" }}
-                  >
-                    EXPLORE NOW!
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 mt-5">
-              <div className="card col-lg-12 h-100 d-flex flex-column justify-content-between card-background">
-                <img
-                  className="card-img-top"
-                  src={imgVideos}
-                  alt="Videos Clipart"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">Videos</h5>
-                  <p className="card-text">
-                    Interested in creating wonderful videos using Indian Sign
-                    Language? Upload your transcript as a text file, type your
-                    text in the provided area or speak through your mic and the
-                    system will automatically create a video using ISL for your
-                    content! Share your vidoes with the entire community!
-                  </p>
-                </div>
-                <div className="card-footer p-0 m-0" style={{ border: "none" }}>
-                  <Link
-                    to="/all-videos"
                     className="btn btn-info w-100 p-3"
                     style={{ fontSize: "large" }}
                   >
