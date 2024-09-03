@@ -11,6 +11,7 @@ import ybotPic from "../Models/ybot/ybot.png";
 
 import * as alphabets from "../Animations/alphabets";
 import { defaultPose } from "../Animations/defaultPose";
+import * as hindi from "../Animations/hindi";
 import * as numbers from "../Animations/numbers";
 import * as words from "../Animations/words";
 
@@ -21,6 +22,7 @@ function LearnSign() {
   const [bot, setBot] = useState(ybot);
   const [speed, setSpeed] = useState(0.2);
   const [pause, setPause] = useState(800);
+  const [isEnglish, setIsEnglish] = useState(true);
 
   const componentRef = useRef({});
   const { current: ref } = componentRef;
@@ -38,6 +40,166 @@ function LearnSign() {
     9: "Nine",
     10: "Ten",
   };
+
+  const hindiNumbers = {
+    0: "०",
+    1: "१",
+    2: "२",
+    3: "३",
+    4: "४",
+    5: "५",
+    6: "६",
+    7: "७",
+    8: "८",
+    9: "९",
+  };
+
+  const hindiLetters = {
+    // Hindi vowels and their representations
+    अ: "A",
+    आ: "Aa",
+    इ: "I",
+    ई: "Ii",
+    उ: "U",
+    ऊ: "Uu",
+    ऋ: "Ri",
+    ॠ: "Rr",
+    ए: "E",
+    ऐ: "Ai",
+    ओ: "O",
+    औ: "Au",
+    अं: "Am",
+    अः: "Ah",
+
+    // Additional vowel characters
+    "ा": "Aa",
+    "ि": "I",
+    "ी": "Ii",
+    "ु": "U",
+    "ू": "Uu",
+    "ृ": "R",
+    "ॄ": "Rr",
+    "ै": "Ai",
+    "ो": "O",
+    "ौ": "Au",
+    ऍ: "E",
+    ऎ: "E",
+    "े": "E",
+    ऒ: "O",
+    ऑ: "O",
+    "ॉ": "O",
+    "ॊ": "O",
+    "्": "Halant",
+
+    // Hindi consonants and their representations
+    क: "Ka",
+    ख: "Kha",
+    ग: "Ga",
+    घ: "Gha",
+    ङ: "Nga",
+    च: "Cha",
+    छ: "Chha",
+    ज: "Ja",
+    झ: "Jha",
+    ञ: "Nya",
+    ट: "Ṭa",
+    ठ: "Ṭha",
+    ड: "Ḍa",
+    ढ: "Ḍha",
+    ण: "Ṇa",
+    त: "Ta",
+    थ: "Tha",
+    द: "Da",
+    ध: "Dha",
+    न: "Na",
+    प: "Pa",
+    फ: "Pha",
+    ब: "Ba",
+    भ: "Bha",
+    म: "Ma",
+    य: "Ya",
+    र: "Ra",
+    ल: "La",
+    व: "Va",
+    श: "Sha",
+    ष: "Ṣa",
+    स: "Sa",
+    ह: "Ha",
+
+    // Combined consonant forms
+    ज्ञ: "Gya",
+    त्र: "Tra",
+    श्र: "Shra",
+  };
+
+  const vowelsList = [
+    "अ", // a
+    "आ", // aa
+    "इ", // i
+    "ई", // ii
+    "उ", // u
+    "ऊ", // uu
+    "ऋ", // ri
+    "ए", // e
+    "ऐ", // ai
+    "ओ", // o
+    "औ", // au
+    "अं", // an
+    "अः", //ah
+    "ा",
+    "ि",
+    "ी",
+    "ु",
+    "ू",
+    "ृ",
+    "ॄ",
+    "ै",
+    "ो",
+    "ौ",
+
+    "े",
+    "ॉ",
+    "ॊ",
+    "्",
+  ];
+
+  const hindiConsonantsList = [
+    "क", // ka
+    "ख", // kha
+    "ग", // ga
+    "घ", // gha
+    "ङ", // nga
+    "च", // cha
+    "छ", // chha
+    "ज", // ja
+    "झ", // jha
+    "ञ", // nya
+    "ट", // ṭa
+    "ठ", // ṭha
+    "ड", // ḍa
+    "ढ", // ḍha
+    "ण", // ṇa
+    "त", // ta
+    "थ", // tha
+    "द", // da
+    "ध", // dha
+    "न", // na
+    "प", // pa
+    "फ", // pha
+    "ब", // ba
+    "भ", // bha
+    "म", // ma
+    "य", // ya
+    "र", // ra
+    "ल", // la
+    "व", // va
+    "श", // sha
+    "ष", // ṣa
+    "स", // sa
+    "ह", // ha
+    "क्ष", // kṣa
+    "ज्ञ", // gya
+  ];
 
   useEffect(() => {
     ref.flag = false;
@@ -85,7 +247,6 @@ function LearnSign() {
 
     ref.camera.position.z = 1.6;
     ref.camera.position.y = 1.4;
-
 
     let loader = new GLTFLoader();
     loader.load(
@@ -207,16 +368,110 @@ function LearnSign() {
     );
   }
 
+  let vowelButtons = [];
+  for (let i = 0; i < vowelsList.length; i++) {
+    vowelButtons.push(
+      <div className="">
+        <button
+          className="signs w-fit px-4 py-2 flex justify-center items-center"
+          onClick={() => {
+            if (ref.animations.length === 0) {
+              hindi[hindiLetters[vowelsList[i]]](ref);
+            }
+          }}
+        >
+          {vowelsList[i]}
+        </button>
+      </div>
+    );
+  }
+  let hindiConsonantButtons = [];
+  for (let i = 0; i < hindiConsonantsList.length; i++) {
+    hindiConsonantButtons.push(
+      <div className="">
+        <button
+          className="signs w-fit px-4 py-2 flex justify-center items-center"
+          onClick={() => {
+            if (ref.animations.length === 0) {
+              hindi[hindiLetters[hindiConsonantsList[i]]](ref);
+            }
+          }}
+        >
+          {hindiConsonantsList[i]}
+        </button>
+      </div>
+    );
+  }
+
+  let hindiNumButtons = [];
+  for (let i = 0; i < 10; i++) {
+    hindiNumButtons.push(
+      <div className="">
+        <button
+          className="signs w-fit px-4 py-2 flex justify-center items-center"
+          onClick={() => {
+            if (ref.animations.length === 0) {
+              numbers[numToWord[[String.fromCharCode(i + 48)]]](ref);
+            }
+          }}
+        >
+          {hindiNumbers[String.fromCharCode(i + 48)]}
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3">
-          <h1 className="heading">Alphabets</h1>
-          <div className="flex gap-2 flex-wrap">{alphaButtons}</div>
-          <h1 className="heading">Numbers</h1>
-          <div className="flex gap-2 flex-wrap">{numButtons}</div>
-          <h1 className="heading">Words</h1>
-          <div className="flex gap-2 flex-wrap">{wordButtons}</div>
+          <div className="flex gap-5 justify-evenly mt-3">
+            <button
+              className={`${
+                isEnglish
+                  ? "bg-blue-600 text-white "
+                  : "border-2 border-blue-600"
+              } rounded-md btn-style w-33`}
+              onClick={() => {
+                setIsEnglish(true);
+              }}
+            >
+              EngLish
+            </button>
+            <button
+              className={`${
+                !isEnglish
+                  ? "bg-blue-600 text-white "
+                  : "border-2 border-blue-600"
+              } rounded-md  btn-style w-33`}
+              onClick={() => {
+                setIsEnglish(false);
+              }}
+            >
+              Hindi
+            </button>
+          </div>
+          {isEnglish ? (
+            <div>
+              <h1 className="heading">Alphabets</h1>
+              <div className="flex gap-2 flex-wrap">{alphaButtons}</div>
+              <h1 className="heading">Numbers</h1>
+              <div className="flex gap-2 flex-wrap">{numButtons}</div>
+              <h1 className="heading">Words</h1>
+              <div className="flex gap-2 flex-wrap">{wordButtons}</div>
+            </div>
+          ) : (
+            <div>
+              <h1 className="heading"> Vowels</h1>
+              <div className="flex gap-2 flex-wrap">{vowelButtons}</div>
+              <h1 className="heading">Consonants</h1>
+              <div className="flex gap-2 flex-wrap">
+                {hindiConsonantButtons}
+              </div>
+              <h1 className="heading">Numbers</h1>
+              <div className="flex gap-2 flex-wrap">{hindiNumButtons}</div>
+            </div>
+          )}
         </div>
         <div className="col-md-7">
           <div id="canvas" />

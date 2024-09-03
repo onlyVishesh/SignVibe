@@ -1,0 +1,28 @@
+import { A } from "./HindiLetters/A";
+import { Aa } from "./HindiLetters/Aa";
+import { I } from "./HindiLetters/I";
+import { Ii } from "./HindiLetters/Ii"; 
+import { U } from "./HindiLetters/U"; 
+import { Uu } from "./HindiLetters/Uu"; 
+import { Ri } from "./HindiLetters/Ri"; 
+import { E } from "./HindiLetters/E"; 
+import { Ai } from "./HindiLetters/Ai"; 
+import { O } from "./HindiLetters/O"; 
+import { Au } from "./HindiLetters/Au"; 
+import { Am } from "./HindiLetters/Am"; 
+import { Ah } from "./HindiLetters/Ah"; 
+import { Ma } from "./HindiLetters/Ma"; 
+import { Ka } from "./HindiLetters/Ka"; 
+import { Kha } from "./HindiLetters/Kha"; 
+import { Ga } from "./HindiLetters/Ga"; 
+import { Gha } from "./HindiLetters/Gha"; 
+import { Nga } from "./HindiLetters/Nga"; 
+import { Cha } from "./HindiLetters/Cha"; 
+import { Chha } from "./HindiLetters/Chha"; 
+import { Ja } from "./HindiLetters/Ja"; 
+import { Jha } from "./HindiLetters/Jha"; 
+import { Nya } from "./HindiLetters/Nya"; 
+import { Dha } from "./HindiLetters/Dha"; 
+import { Ra } from "./HindiLetters/Ra"; 
+
+export { A, Aa, I, Ii, U, Uu, Ri, E, Ai, O, Au, Am, Ah, Ma,Ka, Kha, Ga, Gha, Nga, Cha, Chha, Ja, Jha, Nya , Dha, Ra};

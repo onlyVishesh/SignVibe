@@ -4,15 +4,15 @@ import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-input-slider";
 import "../App.css";
 
+import * as alphabets from "../Animations/alphabets";
+import { defaultPose } from "../Animations/defaultPose";
+import * as hindi from "../Animations/hindi";
+import * as numbers from "../Animations/numbers";
+import * as words from "../Animations/words";
 import xbot from "../Models/xbot/xbot.glb";
 import xbotPic from "../Models/xbot/xbot.png";
 import ybot from "../Models/ybot/ybot.glb";
 import ybotPic from "../Models/ybot/ybot.png";
-
-import * as alphabets from "../Animations/alphabets";
-import * as numbers from "../Animations/numbers";
-import { defaultPose } from "../Animations/defaultPose";
-import * as words from "../Animations/words";
 
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -26,6 +26,7 @@ function Convert() {
   const [bot, setBot] = useState(ybot);
   const [speed, setSpeed] = useState(0.2);
   const [pause, setPause] = useState(800);
+  const [isEnglish, setIsEnglish] = useState(true);
 
   const componentRef = useRef({});
   const { current: ref } = componentRef;
@@ -47,6 +48,79 @@ function Convert() {
     10: "Ten",
   };
 
+  const hindiLetter = {
+    अ: "A",
+    आ: "Aa",
+    इ: "I",
+    ई: "Ii",
+    उ: "U",
+    ऊ: "Uu",
+    ऋ: "Ri",
+    ॠ: "Rr",
+    ए: "E",
+    ऐ: "Ai",
+    ओ: "O",
+    औ: "Au",
+    अं: "Am",
+    अः: "A:",
+
+    "ा": "Aa",
+    "ि": "I",
+    "ी": "Ii",
+    "ु": "U",
+    "ू": "Uu",
+    "ृ": "R",
+    "ॄ": "Rr",
+    "ै": "Ai",
+    "ो": "O",
+    "ौ": "Au",
+    ऍ: "E",
+    ऎ: "E",
+    "े": "E",
+    ऒ: "O",
+    ऑ: "O",
+    "ॉ": "O",
+    "ॊ": "O",
+    "्": "Halant",
+
+    क: "Ka",
+    ख: "Kha",
+    ग: "Ga",
+    घ: "Gha",
+    ङ: "Nga",
+    च: "Cha",
+    छ: "Chha",
+    ज: "Ja",
+    झ: "Jha",
+    ञ: "Nya",
+    ट: "Ṭa",
+    ठ: "Ṭha",
+    ड: "Ḍa",
+    ढ: "Ḍha",
+    ण: "Ṇa",
+    त: "Ta",
+    थ: "Tha",
+    द: "Da",
+    ध: "Dha",
+    न: "Na",
+    प: "Pa",
+    फ: "Pha",
+    ब: "Ba",
+    भ: "Bha",
+    म: "Ma",
+    य: "Ya",
+    र: "Ra",
+    ल: "La",
+    व: "Va",
+    श: "Sha",
+    ष: "Ṣa",
+    स: "Sa",
+    ह: "Ha",
+
+    ज्ञ: "Gya",
+    त्र: "Tra",
+    श्र: "Shra",
+  };
 
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
 
@@ -169,6 +243,7 @@ function Convert() {
     }
     ref.renderer.render(ref.scene, ref.camera);
   };
+
   const stopAllAnimations = () => {
     ref.animations = [];
     ref.flag = false;
@@ -187,7 +262,6 @@ function Convert() {
       } else {
         for (const [index, ch] of word.split("").entries()) {
           let animationKey = ch;
-          console.log(ch)
 
           if (index === word.length - 1)
             ref.animations.push(["add-text", ch + " "]);
@@ -197,14 +271,20 @@ function Convert() {
             numbers[numToWord[animationKey]](ref);
           } else if (alphabets[ch]) {
             alphabets[ch](ref);
+          } else if (!isEnglish && hindi[hindiLetter[ch]]) {
+            hindi[hindiLetter[ch]](ref);
           }
         }
       }
     }
     ref.animate();
   };
+
   const startListening = () => {
-    SpeechRecognition.startListening({ continuous: true });
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: isEnglish ? "en-US" : "hi-IN",
+    });
   };
 
   const stopListening = () => {
@@ -215,6 +295,32 @@ function Convert() {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3">
+          <div className="flex gap-5 justify-evenly mt-3">
+            <button
+              className={`${
+                isEnglish
+                  ? "bg-blue-600 text-white "
+                  : "border-2 border-blue-600"
+              } rounded-md btn-style w-33`}
+              onClick={() => {
+                setIsEnglish(true);
+              }}
+            >
+              English
+            </button>
+            <button
+              className={`${
+                !isEnglish
+                  ? "bg-blue-600 text-white "
+                  : "border-2 border-blue-600"
+              } rounded-md  btn-style w-33`}
+              onClick={() => {
+                setIsEnglish(false);
+              }}
+            >
+              Hindi
+            </button>
+          </div>
           <label className="label-style">
             Speech Recognition: {listening ? "on" : "off"}
           </label>
