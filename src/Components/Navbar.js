@@ -1,77 +1,187 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../Assets/logo.png";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
   return (
-    <nav className="navbar navbar-dark bg-dark fixed-top ">
-      <div className="container flex flex-wrap items-center justify-between w-full py-0 px-2 text-lg text-gray-700">
-        <div>
-          <Link to="/home" className={`navbar-brand h1`}>
-            <img
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top me-3"
-              alt="Logo"
-            />
-            SignVibe
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled ? "bg-gray-900 shadow-lg" : "bg-gray-900 bg-opacity-90"
+      }`}
+    >
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex justify-between items-center">
+          <Link to="/home" className="flex items-center space-x-2">
+            <img src={logo} className="h-8 w-auto" alt="SignVibe Logo" />
+            <span className="text-white text-xl font-bold">SignVibe</span>
           </Link>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-200 hover:text-white focus:outline-none"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d={
+                    isMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16M4 18h16"
+                  }
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Desktop navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link
+              to="/home"
+              className={`text-sm uppercase font-medium ${
+                isActive("/home")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+            >
+              Home
+            </Link>
+            <Link
+              to="/convert"
+              className={`text-sm uppercase font-medium ${
+                isActive("/convert")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+            >
+              Convert
+            </Link>
+            <Link
+              to="/learn-sign"
+              className={`text-sm uppercase font-medium ${
+                isActive("/learn-sign")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+            >
+              Learn Sign
+            </Link>
+            <Link
+              to="/all-videos"
+              className={`text-sm uppercase font-medium ${
+                isActive("/all-videos")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+            >
+              Videos
+            </Link>
+            <Link
+              to="/feedback"
+              className={`text-sm uppercase font-medium ${
+                isActive("/feedback")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+            >
+              Feedback
+            </Link>
+          </div>
         </div>
-        <a href="#" onClick={toggleMenu}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 cursor-pointer md:hidden block"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </a>
-        <div
-          className={`${
-            isMenuOpen ? "block" : "hidden"
-          } w-full md:flex justify-start md:justify-center items-center md:w-auto`}
-        >
-          <ul className="text-gray-700 md:flex md:justify-between md:pt-0 items-center text-center">
-            <li className="nav-item">
-              <Link to="/home" className="nav-link active text-white">
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/convert" className="nav-link text-white">
-                Convert
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/learn-sign" className="nav-link text-white">
-                Learn Sign
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/all-videos" className="nav-link text-white">
-                Videos
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/feedback" className="nav-link text-white">
-                Feedback
-              </Link>
-            </li>
-          </ul>
+
+        {/* Mobile navigation */}
+        <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden mt-4`}>
+          <div className="flex flex-col space-y-4 pb-3">
+            <Link
+              to="/home"
+              className={`text-sm uppercase font-medium ${
+                isActive("/home")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              to="/convert"
+              className={`text-sm uppercase font-medium ${
+                isActive("/convert")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Convert
+            </Link>
+            <Link
+              to="/learn-sign"
+              className={`text-sm uppercase font-medium ${
+                isActive("/learn-sign")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Learn Sign
+            </Link>
+            <Link
+              to="/all-videos"
+              className={`text-sm uppercase font-medium ${
+                isActive("/all-videos")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Videos
+            </Link>
+            <Link
+              to="/feedback"
+              className={`text-sm uppercase font-medium ${
+                isActive("/feedback")
+                  ? "text-blue-400"
+                  : "text-gray-300 hover:text-white"
+              } transition-colors`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Feedback
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

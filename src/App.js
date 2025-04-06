@@ -14,7 +14,7 @@ import Feedback from './Pages/Feedback';
 function App() {
   return(
     <Router>
-      <div className='-mt-[25px]'>
+      <div className='-mt-[6px]'>
         <Navbar />
         <Routes>
           <Route exact path='/home' element={<Home />} />
