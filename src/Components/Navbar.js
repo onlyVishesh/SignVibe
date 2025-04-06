@@ -31,21 +31,30 @@ function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-gray-900 shadow-lg" : "bg-gray-900 bg-opacity-90"
+        scrolled
+          ? "bg-gray-900 shadow-lg py-2"
+          : "bg-gradient-to-r from-gray-900 to-gray-800 py-3"
       }`}
     >
-      <div className="container mx-auto px-4 py-3">
+      <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          <Link to="/home" className="flex items-center space-x-2">
-            <img src={logo} className="h-8 w-auto" alt="SignVibe Logo" />
-            <span className="text-white text-xl font-bold">SignVibe</span>
+          <Link to="/home" className="flex items-center space-x-3 group">
+            <img
+              src={logo}
+              className="h-10 w-auto transition-transform duration-300 group-hover:scale-110"
+              alt="SignVibe Logo"
+            />
+            <span className="text-white text-xl font-bold tracking-tight">
+              <span className="text-blue-400">Sign</span>Vibe
+            </span>
           </Link>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="text-gray-200 hover:text-white focus:outline-none"
+              className="text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 rounded-md p-1"
+              aria-label="Toggle menu"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,118 +78,56 @@ function Navbar() {
           </div>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/home"
-              className={`text-sm uppercase font-medium ${
-                isActive("/home")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-            >
-              Home
-            </Link>
-            <Link
-              to="/convert"
-              className={`text-sm uppercase font-medium ${
-                isActive("/convert")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-            >
-              Convert
-            </Link>
-            <Link
-              to="/learn-sign"
-              className={`text-sm uppercase font-medium ${
-                isActive("/learn-sign")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-            >
-              Learn Sign
-            </Link>
-            <Link
-              to="/all-videos"
-              className={`text-sm uppercase font-medium ${
-                isActive("/all-videos")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-            >
-              Videos
-            </Link>
-            <Link
-              to="/feedback"
-              className={`text-sm uppercase font-medium ${
-                isActive("/feedback")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-            >
-              Feedback
-            </Link>
+          <div className="hidden md:flex items-center space-x-1">
+            {[
+              { path: "/home", label: "Home" },
+              { path: "/convert", label: "Convert" },
+              { path: "/learn-sign", label: "Learn Sign" },
+              { path: "/all-videos", label: "Videos" },
+              { path: "/feedback", label: "Feedback" },
+            ].map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  isActive(item.path)
+                    ? "text-white bg-blue-600 shadow-md"
+                    : "text-gray-300 hover:text-white hover:bg-gray-700"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
 
         {/* Mobile navigation */}
-        <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden mt-4`}>
-          <div className="flex flex-col space-y-4 pb-3">
-            <Link
-              to="/home"
-              className={`text-sm uppercase font-medium ${
-                isActive("/home")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/convert"
-              className={`text-sm uppercase font-medium ${
-                isActive("/convert")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Convert
-            </Link>
-            <Link
-              to="/learn-sign"
-              className={`text-sm uppercase font-medium ${
-                isActive("/learn-sign")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Learn Sign
-            </Link>
-            <Link
-              to="/all-videos"
-              className={`text-sm uppercase font-medium ${
-                isActive("/all-videos")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Videos
-            </Link>
-            <Link
-              to="/feedback"
-              className={`text-sm uppercase font-medium ${
-                isActive("/feedback")
-                  ? "text-blue-400"
-                  : "text-gray-300 hover:text-white"
-              } transition-colors`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Feedback
-            </Link>
+        <div
+          className={`${
+            isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+          } md:hidden overflow-hidden transition-all duration-300 ease-in-out mt-2`}
+        >
+          <div className="flex flex-col space-y-1 py-2 px-1">
+            {[
+              { path: "/home", label: "Home" },
+              { path: "/convert", label: "Convert" },
+              { path: "/learn-sign", label: "Learn Sign" },
+              { path: "/all-videos", label: "Videos" },
+              { path: "/feedback", label: "Feedback" },
+            ].map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-4 py-2 rounded-md text-sm font-medium ${
+                  isActive(item.path)
+                    ? "text-white bg-blue-600"
+                    : "text-gray-300 hover:text-white hover:bg-gray-700"
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
