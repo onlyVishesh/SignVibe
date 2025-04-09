@@ -8,7 +8,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h2 className="text-xl font-bold mb-4">SignVibe</h2>
+            <h2 className="text-xl font-bold ">SignVibe</h2>
             <div className="h-1 w-16 bg-blue-500 mb-6"></div>
             <p className="text-gray-400 mb-6">
               A comprehensive toolkit containing various features related to
@@ -84,7 +84,7 @@ function Footer() {
 
           {/* Services */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Services</h2>
+            <h2 className="text-xl font-bold ">Services</h2>
             <div className="h-1 w-16 bg-blue-500 mb-6"></div>
             <ul className="space-y-3 pl-0">
               <li>
@@ -116,7 +116,7 @@ function Footer() {
 
           {/* Useful Links */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Useful Links</h2>
+            <h2 className="text-xl font-bold ">Useful Links</h2>
             <div className="h-1 w-16 bg-blue-500 mb-6"></div>
             <ul className="space-y-3 pl-0">
               <li>
@@ -140,7 +140,7 @@ function Footer() {
 
           {/* Contact */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Contact</h2>
+            <h2 className="text-xl font-bold ">Contact</h2>
             <div className="h-1 w-16 bg-blue-500 mb-6"></div>
             <ul className="space-y-3 pl-0 ">
               <li className="flex items-start">
