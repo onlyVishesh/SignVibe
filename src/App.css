@@ -124,22 +124,17 @@ a {
   transition: color 0.3s ease;
 }
 
-a:hover {
-  color: var(--primary);
-}
 
 button:active {
   transform: scale(0.98);
 }
 input:focus,
 textarea:focus {
-  border-color: var(--primary) !important;
   box-shadow: 0 0 0 2px rgba(32, 145, 249, 0.2);
   transition: all 0.3s ease;
 }
 
 button:hover:not(:disabled) {
-  background-color: var(--primary);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -230,9 +225,6 @@ body {
     background-color: #4CAF50 !important;
 }
 
-i{
-    margin-left: 20px;
-}
 
 .home-gradient {
     background: rgb(33,37,41);
