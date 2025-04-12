@@ -34,6 +34,7 @@ function Convert() {
 
   const textFromAudio = useRef();
   const textFromInput = useRef();
+  const canvasRef = useRef(null);
 
   const numToWord = {
     0: "Zero",
@@ -296,6 +297,14 @@ function Convert() {
     var strWords = str.split(" ");
     setText("");
 
+    // Scroll to 3D model
+    if (canvasRef.current) {
+      canvasRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+
     for (let word of strWords) {
       if (words[word]) {
         ref.animations.push(["add-text", word + " "]);
@@ -464,7 +473,7 @@ function Convert() {
         </div>
 
         {/* Middle Column - Canvas */}
-        <div className="md:col-span-2 lg:col-span-6 relative">
+        <div className="md:col-span-2 lg:col-span-6 relative" ref={canvasRef}>
           <div className="bg-gradient-to-b from-blue-50 to-indigo-50 rounded-xl shadow-lg overflow-hidden h-full flex items-center justify-center">
             {!modelLoaded && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-80 z-10">

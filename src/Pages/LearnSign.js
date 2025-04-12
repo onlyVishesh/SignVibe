@@ -30,6 +30,7 @@ function LearnSign() {
 
   const componentRef = useRef({});
   const { current: ref } = componentRef;
+  const canvasRef = useRef(null);
 
   const numToWord = {
     0: "Zero",
@@ -366,17 +367,28 @@ function LearnSign() {
     ref.renderer.render(ref.scene, ref.camera);
   };
 
+  // Function to start animation and scroll to model
+  const startAnimation = (animationFn) => {
+    if (ref.animations.length === 0) {
+      animationFn(ref);
+      ref.animate();
+
+      // Scroll to 3D model
+      if (canvasRef.current) {
+        canvasRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    }
+  };
+
   // Button components for different sign categories
   const alphaButtons = Array.from({ length: 26 }, (_, i) => (
     <button
       key={`alpha-${i}`}
       className="w-12 h-12 m-1 bg-white hover:bg-blue-50 text-blue-600 font-semibold rounded-lg shadow transition-all duration-200 hover:shadow-md transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center"
-      onClick={() => {
-        if (ref.animations.length === 0) {
-          alphabets[String.fromCharCode(i + 65)](ref);
-          ref.animate();
-        }
-      }}
+      onClick={() => startAnimation(alphabets[String.fromCharCode(i + 65)])}
     >
       {String.fromCharCode(i + 65)}
     </button>
@@ -386,12 +398,9 @@ function LearnSign() {
     <button
       key={`num-${i}`}
       className="w-12 h-12 m-1 bg-white hover:bg-blue-50 text-blue-600 font-semibold rounded-lg shadow transition-all duration-200 hover:shadow-md transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center"
-      onClick={() => {
-        if (ref.animations.length === 0) {
-          numbers[numToWord[String.fromCharCode(i + 48)]](ref);
-          ref.animate();
-        }
-      }}
+      onClick={() =>
+        startAnimation(numbers[numToWord[String.fromCharCode(i + 48)]])
+      }
     >
       {String.fromCharCode(i + 48)}
     </button>
@@ -401,12 +410,7 @@ function LearnSign() {
     <button
       key={`word-${i}`}
       className="px-3 py-2 m-1 bg-white hover:bg-blue-50 text-blue-600 font-medium rounded-lg shadow transition-all duration-200 hover:shadow-md transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-      onClick={() => {
-        if (ref.animations.length === 0) {
-          words[word](ref);
-          ref.animate();
-        }
-      }}
+      onClick={() => startAnimation(words[word])}
     >
       {word}
     </button>
@@ -416,12 +420,7 @@ function LearnSign() {
     <button
       key={`vowel-${i}`}
       className="w-12 h-12 m-1 bg-white hover:bg-blue-50 text-blue-600 font-semibold rounded-lg shadow transition-all duration-200 hover:shadow-md transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center"
-      onClick={() => {
-        if (ref.animations.length === 0) {
-          hindi[hindiLetters[vowel]](ref);
-          ref.animate();
-        }
-      }}
+      onClick={() => startAnimation(hindi[hindiLetters[vowel]])}
     >
       {vowel}
     </button>
@@ -431,12 +430,7 @@ function LearnSign() {
     <button
       key={`consonant-${i}`}
       className="w-12 h-12 m-1 bg-white hover:bg-blue-50 text-blue-600 font-semibold rounded-lg shadow transition-all duration-200 hover:shadow-md transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center"
-      onClick={() => {
-        if (ref.animations.length === 0) {
-          hindi[hindiLetters[consonant]](ref);
-          ref.animate();
-        }
-      }}
+      onClick={() => startAnimation(hindi[hindiLetters[consonant]])}
     >
       {consonant}
     </button>
@@ -446,12 +440,9 @@ function LearnSign() {
     <button
       key={`hindi-num-${i}`}
       className="w-12 h-12 m-1 bg-white hover:bg-blue-50 text-blue-600 font-semibold rounded-lg shadow transition-all duration-200 hover:shadow-md transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center"
-      onClick={() => {
-        if (ref.animations.length === 0) {
-          numbers[numToWord[String.fromCharCode(i + 48)]](ref);
-          ref.animate();
-        }
-      }}
+      onClick={() =>
+        startAnimation(numbers[numToWord[String.fromCharCode(i + 48)]])
+      }
     >
       {hindiNumbers[String.fromCharCode(i + 48)]}
     </button>
@@ -637,7 +628,7 @@ function LearnSign() {
         </div>
 
         {/* Middle Column - Canvas */}
-        <div className="md:col-span-2 lg:col-span-6 relative">
+        <div className="md:col-span-2 lg:col-span-6 relative" ref={canvasRef}>
           <div className="bg-gradient-to-b from-blue-50 to-indigo-50 rounded-xl shadow-lg overflow-hidden h-full flex items-center justify-center">
             {!modelLoaded && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-80 z-10">
