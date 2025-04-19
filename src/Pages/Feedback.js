@@ -37,7 +37,7 @@ function Feedback() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://docs.google.com/forms/d/e/1FAIpQLSf1yDHIBGR2EusbGSuk-zBWBwoS5i-Gwm7Rvprw6IhBlWfJTQ/viewform?usp=sf_link"
+                href="/"
                 className="btn btn-info"
               >
                 Open Feedback Form
@@ -63,7 +63,7 @@ function Feedback() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://docs.google.com/forms/d/e/1FAIpQLSehlA48o3Y_k9ntfHRzY5II6iqhlpaP2iALN7h1sTjYn7Nr4w/viewform?usp=sf_link"
+                href="/"
                 className="btn btn-info"
               >
                 Open Feedback Form
@@ -93,7 +93,7 @@ function Feedback() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://docs.google.com/forms/d/e/1FAIpQLScDfQ-6EbKgG-nLdjTI7atlA65EnWoQb3mOo3Bl-JtpNhjJuA/viewform?usp=sf_link"
+                href="/"
                 className="btn btn-info"
               >
                 Open Feedback Form
@@ -121,7 +121,7 @@ function Feedback() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://docs.google.com/forms/d/e/1FAIpQLScEHG6UoqUwhoqzE_KNrLXAMOkSb8xKfSJNRCn52gmF9ksRkw/viewform?usp=sf_link"
+                href="/"
                 className="btn btn-info"
               >
                 Open Feedback Form
@@ -149,7 +149,7 @@ function Feedback() {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://docs.google.com/forms/d/e/1FAIpQLScScSh9Mli_1XKQLmNBrCGkWve7jbMqMwHhpiNS-qeNNXgKMA/viewform?usp=sf_link"
+                href="/"
                 className="btn btn-info"
               >
                 Open Feedback Form
