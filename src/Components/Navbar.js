@@ -98,6 +98,14 @@ function Navbar() {
                 {item.label}
               </Link>
             ))}
+            <a
+              href="https://signvibe.streamlit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-300 hover:text-white hover:bg-gray-700"
+            >
+              Sign to Text
+            </a>
           </div>
         </div>
 
@@ -128,6 +136,15 @@ function Navbar() {
                 {item.label}
               </Link>
             ))}
+            <a
+              href="https://signvibe.streamlit.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 block"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Sign to Text
+            </a>
           </div>
         </div>
       </div>
