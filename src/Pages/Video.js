@@ -36,7 +36,7 @@ function Video() {
   const componentRef = useRef({});
   const { current: ref } = componentRef;
 
-  let id = React.createRef();
+  const id = useRef(null);
 
   useEffect(() => {
 
@@ -88,7 +88,7 @@ function Video() {
 
     id.current.value=params.videoId
 
-  }, [ref, bot, params]);
+  }, [ref, bot]);
 
   ref.animate = () => {
     if(ref.animations.length === 0){
