@@ -88,7 +88,7 @@ function Video() {
 
     id.current.value=params.videoId
 
-  }, [ref, bot]);
+  }, [ref, bot, params]);
 
   ref.animate = () => {
     if(ref.animations.length === 0){
