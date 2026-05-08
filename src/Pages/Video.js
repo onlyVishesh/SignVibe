@@ -1,37 +1,36 @@
-import '../App.css'
-import axios from 'axios';
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from 'react-router-dom'
-import Slider from 'react-input-slider';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.min.css';
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "font-awesome/css/font-awesome.min.css";
+import { useEffect, useRef, useState } from "react";
+import Slider from "react-input-slider";
+import { useParams } from "react-router-dom";
+import "../App.css";
 
-import xbot from '../Models/xbot/xbot.glb';
-import ybot from '../Models/ybot/ybot.glb';
-import xbotPic from '../Models/xbot/xbot.png';
-import ybotPic from '../Models/ybot/ybot.png';
+import xbot from "../Models/xbot/xbot.glb";
+import xbotPic from "../Models/xbot/xbot.png";
+import ybot from "../Models/ybot/ybot.glb";
+import ybotPic from "../Models/ybot/ybot.png";
 
-import * as words from '../Animations/words';
-import * as alphabets from '../Animations/alphabets';
-import { defaultPose } from '../Animations/defaultPose';
+import * as alphabets from "../Animations/alphabets";
+import { defaultPose } from "../Animations/defaultPose";
+import * as words from "../Animations/words";
 
+import { Button, Modal } from "react-bootstrap";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Button, Modal } from "react-bootstrap";
 
-import { baseURL } from '../Config/config'
-
+import { baseURL } from "../Config/config";
 
 function Video() {
   const [text, setText] = useState("");
   const [bot, setBot] = useState(ybot);
   const [speed, setSpeed] = useState(0.1);
   const [pause, setPause] = useState(800);
-  const [invalidId, setInvalidId] = useState(false)
-  const [title, setTitle] = useState('')
-  const [desc, setDesc] = useState('')
+  const [invalidId, setInvalidId] = useState(false);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
-  const params = useParams()
+  const params = useParams();
 
   const componentRef = useRef({});
   const { current: ref } = componentRef;
@@ -39,7 +38,6 @@ function Video() {
   const id = useRef(null);
 
   useEffect(() => {
-
     ref.flag = false;
     ref.pending = false;
 
@@ -54,14 +52,14 @@ function Video() {
     ref.scene.add(spotLight);
 
     ref.camera = new THREE.PerspectiveCamera(
-        30,
-        window.innerWidth*0.57 / (window.innerHeight - 70),
-        0.1,
-        1000
-    )
+      30,
+      (window.innerWidth * 0.57) / (window.innerHeight - 70),
+      0.1,
+      1000,
+    );
 
     ref.renderer = new THREE.WebGLRenderer({ antialias: true });
-    ref.renderer.setSize(window.innerWidth*0.57, window.innerHeight - 70);
+    ref.renderer.setSize(window.innerWidth * 0.57, window.innerHeight - 70);
     document.getElementById("canvas").innerHTML = "";
     document.getElementById("canvas").appendChild(ref.renderer.domElement);
 
@@ -73,150 +71,175 @@ function Video() {
       bot,
       (gltf) => {
         gltf.scene.traverse((child) => {
-          if ( child.type === 'SkinnedMesh' ) {
+          if (child.type === "SkinnedMesh") {
             child.frustumCulled = false;
           }
-    });
+        });
         ref.avatar = gltf.scene;
         ref.scene.add(ref.avatar);
         defaultPose(ref);
       },
       (xhr) => {
         console.log(xhr);
-      }
+      },
     );
 
-    id.current.value=params.videoId
-
+    id.current.value = params.videoId;
   }, [ref, bot]);
 
   ref.animate = () => {
-    if(ref.animations.length === 0){
-        ref.pending = false;
-      return ;
+    if (ref.animations.length === 0) {
+      ref.pending = false;
+      return;
     }
     requestAnimationFrame(ref.animate);
-    if(ref.animations[0].length){
-        if(!ref.flag) {
-          if(ref.animations[0][0]==='add-text'){
-            setText(text + ref.animations[0][1]);
-            ref.animations.shift();
-          }
-          else{
-            for(let i=0;i<ref.animations[0].length;){
-              let [boneName, action, axis, limit, sign] = ref.animations[0][i]
-              if(sign === "+" && ref.avatar.getObjectByName(boneName)[action][axis] < limit){
-                  ref.avatar.getObjectByName(boneName)[action][axis] += speed;
-                  ref.avatar.getObjectByName(boneName)[action][axis] = Math.min(ref.avatar.getObjectByName(boneName)[action][axis], limit);
-                  i++;
-              }
-              else if(sign === "-" && ref.avatar.getObjectByName(boneName)[action][axis] > limit){
-                  ref.avatar.getObjectByName(boneName)[action][axis] -= speed;
-                  ref.avatar.getObjectByName(boneName)[action][axis] = Math.max(ref.avatar.getObjectByName(boneName)[action][axis], limit);
-                  i++;
-              }
-              else{
-                  ref.animations[0].splice(i, 1);
-              }
+    if (ref.animations[0].length) {
+      if (!ref.flag) {
+        if (ref.animations[0][0] === "add-text") {
+          setText(text + ref.animations[0][1]);
+          ref.animations.shift();
+        } else {
+          for (let i = 0; i < ref.animations[0].length; ) {
+            let [boneName, action, axis, limit, sign] = ref.animations[0][i];
+            if (
+              sign === "+" &&
+              ref.avatar.getObjectByName(boneName)[action][axis] < limit
+            ) {
+              ref.avatar.getObjectByName(boneName)[action][axis] += speed;
+              ref.avatar.getObjectByName(boneName)[action][axis] = Math.min(
+                ref.avatar.getObjectByName(boneName)[action][axis],
+                limit,
+              );
+              i++;
+            } else if (
+              sign === "-" &&
+              ref.avatar.getObjectByName(boneName)[action][axis] > limit
+            ) {
+              ref.avatar.getObjectByName(boneName)[action][axis] -= speed;
+              ref.avatar.getObjectByName(boneName)[action][axis] = Math.max(
+                ref.avatar.getObjectByName(boneName)[action][axis],
+                limit,
+              );
+              i++;
+            } else {
+              ref.animations[0].splice(i, 1);
             }
           }
         }
-    }
-    else {
+      }
+    } else {
       ref.flag = true;
       setTimeout(() => {
-        ref.flag = false
+        ref.flag = false;
       }, pause);
       ref.animations.shift();
     }
     ref.renderer.render(ref.scene, ref.camera);
-  }
+  };
 
   const sign = (str) => {
     str = str.toUpperCase();
-    var strWords = str.split(' ');
-    setText('')
+    var strWords = str.split(" ");
+    setText("");
 
-    for(let word of strWords){
-      if(words[word]){
-        ref.animations.push(['add-text', word+' ']);
+    for (let word of strWords) {
+      if (words[word]) {
+        ref.animations.push(["add-text", word + " "]);
         words[word](ref);
-        
-      }
-      else{
-        for(const [index, ch] of word.split('').entries()){
-          if(index === word.length-1)
-            ref.animations.push(['add-text', ch+' ']);
-          else 
-            ref.animations.push(['add-text', ch]);
+      } else {
+        for (const [index, ch] of word.split("").entries()) {
+          if (index === word.length - 1)
+            ref.animations.push(["add-text", ch + " "]);
+          else ref.animations.push(["add-text", ch]);
           alphabets[ch](ref);
-          
         }
       }
     }
-  }
+  };
 
   const animateFromID = () => {
-      const videoID = id.current.value;
-      axios.get(`${baseURL}/videos/${videoID}`).then((res) => {
-        console.log(res.data)
-        setTitle(res.data.title)
-        setDesc(res.data.desc)
+    const videoID = id.current.value;
+    axios
+      .get(`${baseURL}/videos/${videoID}`)
+      .then((res) => {
+        console.log(res.data);
+        setTitle(res.data.title);
+        setDesc(res.data.desc);
         sign(res.data.content);
-      }).catch(err => {
-        console.log(err)
-        setInvalidId(true)
+      })
+      .catch((err) => {
+        console.log(err);
+        setInvalidId(true);
       });
-  }
+  };
 
   return (
-    <div className='container-fluid'>
-      <div className='row'>
-        <div className='col-md-3'>
-          <label className='label-style'>
-              Video ID
-          </label>
-          <input ref={id} splaceholder='Video ID' className='w-100 input-style' />
-          <button onClick={animateFromID} className='btn btn-primary w-100 btn-style btn-start mb-3'>
-              Start Video
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-3">
+          <label className="label-style">Video ID</label>
+          <input
+            ref={id}
+            splaceholder="Video ID"
+            className="w-100 input-style"
+          />
+          <button
+            onClick={animateFromID}
+            className="btn btn-primary w-100 btn-style btn-start mb-3"
+          >
+            Start Video
           </button>
           <hr />
-          {title && 
-            <div className='d-flex flex-column justify-content-center align-items-center mt-3'>
-            <label className='h3'>{title}</label>
-            <label>{desc}</label>
-            <div className='w-100'>
-              <label className='label-style mt-4'>
-                Processed Text
-              </label>
-              <textarea rows={10} value={text} className='w-100 input-style mt-2' readOnly />
+          {title && (
+            <div className="d-flex flex-column justify-content-center align-items-center mt-3">
+              <label className="h3">{title}</label>
+              <label>{desc}</label>
+              <div className="w-100">
+                <label className="label-style mt-4">Processed Text</label>
+                <textarea
+                  rows={10}
+                  value={text}
+                  className="w-100 input-style mt-2"
+                  readOnly
+                />
               </div>
-          </div>}
+            </div>
+          )}
         </div>
-        <div className='col-md-7'>
-          <div id='canvas'/>
+        <div className="col-md-7">
+          <div id="canvas" />
         </div>
-        <div className='col-md-2'>
-          <p className='bot-label'>
-            Select Avatar
-          </p>
-          <img src={xbotPic} className='bot-image col-md-11' onClick={()=>{setBot(xbot)}} alt='Avatar 1: XBOT'/>
-          <img src={ybotPic} className='bot-image col-md-11' onClick={()=>{setBot(ybot)}} alt='Avatar 2: YBOT'/>
-          <p className='label-style'>
-            Animation Speed: {Math.round(speed*100)/100}
+        <div className="col-md-2">
+          <p className="bot-label">Select Avatar</p>
+          <img
+            src={xbotPic}
+            className="bot-image col-md-11"
+            onClick={() => {
+              setBot(xbot);
+            }}
+            alt="Avatar 1: XBOT"
+          />
+          <img
+            src={ybotPic}
+            className="bot-image col-md-11"
+            onClick={() => {
+              setBot(ybot);
+            }}
+            alt="Avatar 2: YBOT"
+          />
+          <p className="label-style">
+            Animation Speed: {Math.round(speed * 100) / 100}
           </p>
           <Slider
             axis="x"
             xmin={0.05}
-            xmax={0.50}
+            xmax={0.5}
             xstep={0.01}
             x={speed}
             onChange={({ x }) => setSpeed(x)}
-            className='w-100'
+            className="w-100"
           />
-          <p className='label-style'>
-            Pause time: {pause} ms
-          </p>
+          <p className="label-style">Pause time: {pause} ms</p>
           <Slider
             axis="x"
             xmin={0}
@@ -224,7 +247,7 @@ function Video() {
             xstep={100}
             x={pause}
             onChange={({ x }) => setPause(x)}
-            className='w-100'
+            className="w-100"
           />
         </div>
       </div>
@@ -232,7 +255,9 @@ function Video() {
         <Modal.Header closeButton>
           <Modal.Title>Invalid Video ID</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Please make sure that the video ID that your have entered is valid!</Modal.Body>
+        <Modal.Body>
+          Please make sure that the video ID that your have entered is valid!
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={() => setInvalidId(false)}>
             Close
@@ -240,7 +265,7 @@ function Video() {
         </Modal.Footer>
       </Modal>
     </div>
-  )
+  );
 }
 
 export default Video;

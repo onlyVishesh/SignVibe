@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -16,7 +15,7 @@ function Footer() {
             </p>
             <div className="flex space-x-4">
               <button
-                onClick={() => window.open('https://facebook.com', '_blank')}
+                onClick={() => window.open("https://facebook.com", "_blank")}
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Facebook"
               >
@@ -34,7 +33,7 @@ function Footer() {
                 </svg>
               </button>
               <button
-                onClick={() => window.open('https://twitter.com', '_blank')}
+                onClick={() => window.open("https://twitter.com", "_blank")}
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Twitter"
               >
@@ -48,7 +47,7 @@ function Footer() {
                 </svg>
               </button>
               <button
-                onClick={() => window.open('https://instagram.com', '_blank')}
+                onClick={() => window.open("https://instagram.com", "_blank")}
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="Instagram"
               >
@@ -66,7 +65,7 @@ function Footer() {
                 </svg>
               </button>
               <button
-                onClick={() => window.open('https://github.com', '_blank')}
+                onClick={() => window.open("https://github.com", "_blank")}
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="GitHub"
               >
